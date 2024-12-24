@@ -1,5 +1,5 @@
 import type { Route } from "./+types/_index";
-import { Welcome } from "../welcome/welcome";
+import { redirect } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,6 +8,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
-  return <Welcome />;
+export function loader() {
+  return redirect("/dashboard");
 }

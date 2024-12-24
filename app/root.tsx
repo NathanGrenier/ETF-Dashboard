@@ -5,10 +5,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigate,
+  useHref,
 } from "react-router";
+import { NextUIProvider } from "@nextui-org/react";
 
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
+import SiteNavbar from "./SiteNavbar";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -25,6 +29,8 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+
   return (
     <html lang="en">
       <head>
@@ -33,10 +39,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+      <body className="dark text-foreground bg-background min-h-screen flex justify-center">
+        <div className="w-full max-w-screen-xl px-4">
+          <NextUIProvider navigate={navigate} useHref={useHref}>
+            <SiteNavbar />
+            {children}
+            <ScrollRestoration />
+            <Scripts />
+          </NextUIProvider>
+        </div>
       </body>
     </html>
   );
